@@ -12,7 +12,6 @@
 \usepackage{geometry}
 \usepackage{stfloats}
 \geometry{
-  textwidth=\columnwidth,
   top=19.1mm,
   bottom=36.7mm,
   left=19.1mm,
@@ -57,15 +56,21 @@ Detection and Mitigation of Corrupted Information in Distributed Model Predictiv
 }
 \makeatother
 
-\draft%
-% \final%
-
-\makeglossaries
+% \draft%
+\final%
+\newcommand{\id}{}
+\newcommand{\price}{31.00}
+\pubid{\begin{minipage}{\textwidth}\ \\[50pt]\centering
+  \copyright 2021 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.\\
+See https://www.ieee.org/publications/rights/index.html for more information.
+\end{minipage}}
+% \makeglossaries
+\markboth{Oi}{test}
 \begin{document}
 \maketitle
 % \IEEEpeerreviewmaketitle% This command is only
-\thispagestyle{empty}
-\pagestyle{empty}
+% \thispagestyle{empty}
+% \pagestyle{empty}
 
 \begin{abstract}
   In distributed predictive control structures, communication among agents is required to achieve a consensus and approach an optimal global behavior. Such negotiation mechanisms are sensitive to attacks on these exchanges.
@@ -122,7 +127,7 @@ Moreover, in Section~\ref{sec:App_dMPC}, an application is given to illustrate a
 Finally, in Section~\ref{sec:CC}, we conclude, and we give an outlook of future works.
 
 \section{PRELIMINARIES AND PROBLEM STATEMENT}\label{sec:PS}
-\emph{Notation:} In this paper, $\|\cdot\|$ and $\|\cdot\|_{F}$ represent the $\ell_{2}$ and Frobenius norms. $\|\vec{v}\|_{Y}$ is the weighted norm, $\|Y^{1\over 2}\vec{v}\|$.
+\emph{Notation:} In this paper, $\|\cdot\|$ and $\|\cdot\|_{F}$ represent the $\ell_{2}$ and Frobenius norms. $\|\vec{v}\|_{Y}$ is the weighted norm, $\|Y^{\frac{1}{2}}\vec{v}\|$.
 $P_{\mathsf{T}}(\cdot)$ is the Euclidean projection onto set $\mathsf{T}$.
 $\otimes$ represents the Kronecker product. $\1_{m,n}$ is a ${m\times n}$ matrix filled with $1$.
 $I_{c}$ is a ${c\times c}$ identity matrix.
@@ -162,7 +167,7 @@ A known formulation of the MPC structure~\cite{CamachoBordons2007,VelardeEtAl201
 \end{aligned}\right.
 
 \end{matrix}
-\label{eq:dmpcModLOP}
+% \label{eq:dmpcModLOP}
 \end{equation*}
 with symmetric weight matrices ${Q_{i}\geq0}$, ${R_{i}>0}$. $\vec{v}_{i}(k)$ represents a control objective. It can either be ${\vec{v}_{i}(k)=\vec{w}_{i}(k)-\vec{x}_{i}(k)}$ for reference tracking, where $\vec{w}_{i}(k)$ is a state reference, or ${\vec{v}_{i}(k)=\vec{x}_{i}(k)}$ for disturbance rejection.
 
