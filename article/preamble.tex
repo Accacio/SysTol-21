@@ -1,0 +1,109 @@
+
+\usepackage{graphicx}      % include this line if your document contains figures
+\usepackage{grffile}       % filenames
+\usepackage{booktabs}       % filenames
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+% \usepackage[showframe, pass]{geometry}
+% \usepackage{amsfonts}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage[math]{blindtext}
+\usepackage{tikzscale}
+\usepackage{bm}
+\usepackage{ifthen}
+\usepackage[ruled,noend]{algorithm2e}
+% \usepackage[justification=centering]{caption}
+% \usepackage{subcaption}
+\SetKwRepeat{Do}{do}{while}
+\usepackage[author={Accacio}]{pdfcomment}
+
+\newif\ifdebug%
+
+
+\usepackage[acronym]{glossaries}%
+
+\newcommand{\acrSing}[3]{\newacronym{#1}{#2}{#3}
+  \expandafter\newcommand\csname #1\endcsname{\gls{#1}}}
+
+\newcommand{\acrPl}[5]{
+  \newacronym[plural=#4,firstplural=#5 (#4)]{#1}{#2}{#3}
+  \expandafter\newcommand\csname #1\endcsname{\gls{#1}}
+  \expandafter\newcommand\csname #4\endcsname{\glspl{#1}}
+}
+\newcommand{\acr}[5][4=,5=]{
+  % \ifthenelse{\equal{#5}{}}
+  % {
+    \acrSing{#1}{#2}{#3}
+  % }
+  % {
+  %   \acrPl{#1}{#2}{#3}{#4}{#5}
+  % }
+}
+
+% \newcommand{\symbl}[3]{\newglossaryentry{#1}{name ={#2},	description ={#3}}
+%   \expandafter\newcommand\csname #1\endcsname{\gls{#1}}
+% }
+
+
+
+
+\usepackage{color}
+\newcommand{\no}[1]{}
+
+\newcommand{\comments}{
+  \usepackage{geometry}
+  \newgeometry{
+    textwidth=\columnwidth,
+    % left=60mm,
+    hoffset=-1.5in,
+    bottom=0.41in,
+    top=0.41in
+    % marginparwidth=413pt
+  }
+  \onecolumn
+}
+\newcommand{\draft}{\debugtrue}
+\newcommand{\final}{\debugfalse}
+\newcommand{\question}[1]{\ifdebug%
+  {\pdfcomment[color=red,opacity=0.4,subject=Should I?]{#1}} \fi}
+\newcommand{\todo}[2][FORGOT TO DO SOMETHING]{\ifdebug%
+  {\color{red}#2}\else \PackageError{}{#1}{#2}#2\fi}%
+\newcommand\doing[2][FORGOT TO DO SOMETHING]{\ifdebug%
+  {\color{blue}#2}\else \PackageError{}{#1}{#2}#2\fi}%
+\newcommand\warning[1]{\ifdebug%
+  {\color{red}#1}\fi}
+\newcommand\note[1]{\ifdebug%
+  {\pdfcomment[color=orange,opacity=0.4,subject=note]{#1}} \fi}
+
+
+%===============================================================================
+\newtheorem{theorem}{theorem}[section]
+\newtheorem{problem}{Problem}%[numberby]
+\newtheorem{example}{Example}%[numberby]
+\newtheorem{remark}{Remark}%[numberby]
+\newtheorem{assumption}{Assumption}%[numberby]
+
+\newcommand{\ensemblenombre}[1]{\mathbb{#1}}
+\newcommand{\eq}[2]{\mbox{$#1=#2$}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Np}{N_{\text{p}}}
+\newcommand{\T}{^{\mathrm{T}}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\Varepsilon}{\mathcal{E}}
+\newcommand{\diff}{\mathop{}\mathopen{}\mathrm{d}}
+\newcommand{\set}[1]{\mathcal{#1}}
+\newcommand{\p}{^{(p)}}
+\newcommand{\pplusone}{^{(p+1)}}
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\enstq}[2]{\{#1\mathrel{}\mid\mathrel{}#2\}}
+
+\graphicspath{{img/}}
