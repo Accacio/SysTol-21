@@ -1,0 +1,17 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+*.auctex-auto
+*.acn
+*.aux
+*.up*
+*.synctex.gz
+*.glo
+*.ist
+*.bbl
+*.blg
+*.glo
+*.ist
+*.out
