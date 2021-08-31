@@ -25,10 +25,67 @@
 
 \mode<presentation>
 {
-  \usetheme{Warsaw}
+  \usetheme{Luebeck}
+  % \usetheme{Madrid}
+  % \usetheme{Warsaw}
+  % \usetheme{Copenhagen}
+  % \usecolortheme{beaver}
+  % \usecolortheme{rose}
   % or ...
+  % \usecolortheme{beaver}
+  \useoutertheme{split}
+  \useinnertheme{circles}
 
+  \setbeamercolor{palette primary}{bg=red!50!black!80}
+  \setbeamercolor{palette secondary}{bg=red!50!black!70}
+  \setbeamercolor{palette tertiary}{bg=gray!90!black!50}
+  \setbeamercolor{palette quaternary}{bg=gray!90!black!100}
+
+  \setbeamercolor{item}{fg=red!50!black!80}
+  \setbeamercolor{section in toc}{fg=red!50!black!80}
+
+  % \setbeamercolor{author in head/foot}{bg=grey!60}
   \setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+\makeatletter
+\setbeamertemplate{page number in head/foot}[appendixframenumber]
+\setbeamertemplate{headline}
+{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \centering
+    \usebeamerfont{author in head/foot}\insertsection{}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{title in head/foot}%
+    \centering
+    \insertsubsection{}
+  \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+\setbeamertemplate{footline}
+{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \centering
+    \usebeamerfont{date in head/foot}\usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}
+    % \hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \centering
+    \usebeamerfont{author in head/foot}\insertshortauthor{}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.65\paperwidth,ht=2.25ex,dp=1ex,right]{title in head/foot}%
+    \centering
+    \insertshorttitle{}
+  \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+\makeatother
+
   % or whatever (possibly just delete it)
 }
 
@@ -39,20 +96,21 @@
 \usepackage[utf8]{inputenc}
 % or whatever
 
-\usepackage{times}
+% \usepackage{times}
 \usepackage[T1]{fontenc}
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
 
 
-\title[Detect. and Mitigation of Corrupted Info. in DMPC Based on Resource Allocation] % (optional, use only with long paper titles)
+\title[Detection and Mitigation of Corrupted Information in DMPC Based on Resource Allocation] % (optional, use only with long paper titles)
 {Detection and Mitigation of Corrupted Information in Distributed Model Predictive Control Based on Resource Allocation}
 
 % \subtitle
 % {Include Only If Paper Has a Subtitle}
 
 \author[Nogueira, Bourdais, Guéguen] % (optional, use only with lots of authors)
-{R. A. Nogueira \and R. Bourdais \and H. Guéguen}
+{R. A. Nogueira \and R. Bourdais \and H. Guéguen\\
+\texttt{\{rafael-accacio.nogueira,romain.bourdais,herve.gueguen\}\ at \ centralesupelec.fr}}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -60,8 +118,9 @@
 \institute[IETR --- CentraleSupélec] % (optional, but mostly needed)
 {
   % \inst{1}%
-  AUT Department\\
-  IETR --- CentraleSupélec
+  AUT Department
+  \\IETR --- CentraleSupélec
+  % \\[10pt]\\\includegraphics[width=1.5cm]{../img/logos/supelec.jpeg}
 }
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
@@ -84,7 +143,7 @@
 % is a graphic format that can be processed by latex or pdflatex,
 % resp., then you can add a logo as follows:
 
-\pgfdeclareimage[height=0.5cm]{university-logo}{../img/logos/supelec.jpeg}
+\pgfdeclareimage[height=.8cm]{university-logo}{../img/logos/supelec.jpeg}
 \logo{\pgfuseimage{university-logo}}
 
 
