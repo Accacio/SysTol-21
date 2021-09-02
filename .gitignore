@@ -3,15 +3,18 @@
 *.log
 tmp/
 
-*.auctex-auto
 *.acn
+*.auctex-auto
 *.aux
-*.up*
-*.synctex.gz
-*.glo
-*.ist
 *.bbl
 *.blg
 *.glo
 *.ist
+*.log
+*.nav
 *.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.up*
