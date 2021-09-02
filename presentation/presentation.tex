@@ -14,18 +14,29 @@
   % \usecolortheme{beaver}
   \useoutertheme{split}
   \useinnertheme{circles}
-
-  \setbeamercolor{palette primary}{bg=red!50!black!80}
-  \setbeamercolor{palette secondary}{bg=red!50!black!70}
+\definecolor{supelecRed}{RGB}{120,30,56}
+\definecolor{supelecPurple}{RGB}{104,95,115}
+%
+  % \setbeamercolor{palette primary}{bg=red!50!black!80}
+  \setbeamercolor{palette primary}{bg=supelecRed}
+  % \setbeamercolor{palette secondary}{bg=red!50!black!70}
+  \setbeamercolor{palette secondary}{bg=supelecRed}
   \setbeamercolor{palette tertiary}{bg=gray!90!black!50}
-  \setbeamercolor{palette quaternary}{bg=gray!90!black!70}
-  \setbeamercolor{block title}{bg=red!50!black!70}
+  % \setbeamercolor{palette tertiary}{bg=supelecPurple}
+  \setbeamercolor{palette quaternary}{bg=gray!90!black!90}
+  % \setbeamercolor{palette quaternary}{bg=supelecPurple}
+  % \setbeamercolor{block title}{bg=red!50!black!70}
+  \setbeamercolor{block title}{bg=supelecRed}
 
-  \setbeamercolor{item}{fg=red!50!black!80}
-  \setbeamercolor{section in toc}{fg=red!50!black!80}
+  % \setbeamercolor{item}{fg=red!50!black!80}
+  \setbeamercolor{item}{fg=supelecRed}
+  % \setbeamercolor{section in toc}{fg=red!50!black!80}
+  \setbeamercolor{section in toc}{fg=supelecRed}
 
-  \setbeamercolor{bibliography entry author}{fg=red!50!black!80}
-  \setbeamercolor{bibliography entry location}{fg=red!50!black!40}
+  % \setbeamercolor{bibliography entry author}{fg=red!50!black!80}
+  \setbeamercolor{bibliography entry author}{fg=supelecRed}
+  % \setbeamercolor{bibliography entry location}{fg=red!50!black!40}
+  \setbeamercolor{bibliography entry location}{fg=supelecRed!70}
 
 
   % \setbeamercolor{author in head/foot}{bg=grey!60}
@@ -94,7 +105,7 @@
 \usepackage[T1]{fontenc}
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
-
+\graphicspath{{../img/}}
 \usepackage{bm}
 \usepackage[ruled,noend]{algorithm2e}
 \SetKwRepeat{Do}{do}{while}
@@ -128,8 +139,8 @@
 % {Include Only If Paper Has a Subtitle}
 
 \author[Nogueira, Bourdais, Guéguen] % (optional, use only with lots of authors)
-{R. A. Nogueira \and R. Bourdais \and H. Guéguen\\
-\texttt{\{rafael-accacio.nogueira,romain.bourdais,herve.gueguen\}\ at \ centralesupelec.fr}}
+{R. A. Nogueira \and  R. Bourdais \and  H. Guéguen\\
+\texttt{\{rafael-accacio.nogueira, romain.bourdais, herve.gueguen\}\\ at \\ centralesupelec.fr}}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -148,18 +159,19 @@
 {5th International Conference on Control and Fault-Tolerant Systems, 2021
   \begin{minipage}{.3\textwidth}
     \centering
-    \includegraphics[width=2cm]{../img/logos/logo_IETR.png}
+    \includegraphics[width=2cm]{logos/logo_IETR.png}
   \end{minipage}
   \begin{minipage}{.3\textwidth}
     \centering
     \vspace{10pt}
-    \includegraphics[width=1.5cm]{../img/qrPresentation.png}
+    \includegraphics[width=1.5cm]{qrPresentation.png}
+    % qrencode https://github.com/Accacio/SysTol-21/raw/main/presentation/presentation.pdf -o ~/git/SysTol21/img/qrPresentation.png
     \href{https://git.io/JEFGW}{https://git.io/JEFGW}
   \end{minipage}
   \begin{minipage}{.3\textwidth}
     \centering
     \vspace{10pt}
-    \includegraphics[width=2cm]{../img/logos/supelec.jpeg}
+    \includegraphics[width=2cm]{logos/supelec.jpeg}
   \end{minipage}
 }
 % - Either use conference name or its abbreviation.
@@ -168,7 +180,7 @@
 
 \subject{}
 
-\logo{\includegraphics[height=.8cm]{../img/logos/supelec.jpeg}}
+\logo{\includegraphics[height=.8cm]{logos/supelec.jpeg}}
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
@@ -243,6 +255,15 @@
   }
 \end{frame}
 
+\begin{frame}
+  \begin{figure}[!t]
+    \centering
+    % inkscape -Dz flowchartAlg2.svg --export-latex -AflowchartAlg2.pdf
+    % \footnotesize
+    \def\svgwidth{.4\textwidth} \input{../img/flowchartAlg2.pdf_tex}
+    \caption{Scheme of DMPC using a \emph{coordinator} and $M$ agents.}\label{fig:schemeQuantity}
+  \end{figure}
+\end{frame}
 
 \begin{frame}
   \centering
@@ -302,7 +323,9 @@
 \end{frame}
 
 \begin{frame}{Make Titles Informative.}
+  \begin{block}{te}
 
+  \end{block}
   You can create overlays\dots
   \begin{itemize}
   \item using the \texttt{pause} command:
@@ -373,22 +396,27 @@
 \section*{Summary}
 
 \begin{frame}{Summary}
-  \begin{minipage}{.6\textwidth}
+  \pause
+  \begin{minipage}[t]{.45\textwidth}
     % Keep the summary *very short*.
     \begin{enumerate}
       \item
             Resource allocation based DMPC is vulnerable to attacks.
+            \pause
       \item
             Sub-problems structure has time invariant parameters.
+            \pause
       \item
             Attack can be estimated using these parameters.
+            \pause
     \end{enumerate}
-
+  \end{minipage}
+  \pause
     % The following outlook is optional.
-    \vskip0pt plus.5fill
+    % \vskip0pt plus.5fill
+  \begin{minipage}[t]{.45\textwidth}
     \begin{itemize}
-      \item
-            Outlook
+      \item Outlook
             \begin{itemize}
               \item
                     Inequality Constraints yield Hybrid behavior
@@ -438,26 +466,29 @@ defense mechanism for distributed model predictive control,''
     2000.
   \end{thebibliography}
 \end{frame}
+
 \begin{frame}[plain]
   \centering
   \vfill
-       Questions?
-\vfill
-\begin{minipage}[t]{.45\linewidth}
-  \centering
-  Repository
+  Questions?
+  \vfill
+  \begin{minipage}[t]{.45\linewidth}
+    \small
+    \centering
+    Repository
+    \href{https://github.com/Accacio/SysTol-21}{https://github.com/Accacio/SysTol-21}
 
-  \href{https://github.com/Accacio/SysTol-21}{https://github.com/Accacio/SysTol-21}
+    \includegraphics[width=2cm]{qrRepo.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{.5\linewidth}
+    \small
+    \centering
+    Contact
+    \href{mailto:rafael-accacio.nogueira@centralesupelec.fr?subject=SysTol'21 Presentation}{rafael-accacio.nogueira@centralesupelec.fr}
 
-  \includegraphics[width=2cm]{../img/qrRepo.png}
-\end{minipage}
-\begin{minipage}[t]{.5\linewidth}
-  \centering
-  Contact
-  \href{mailto:rafael-accacio.nogueira@centralesupelec.fr?subject=SysTol'21 Presentation}{rafael-accacio.nogueira@centralesupelec.fr}
-
-    \includegraphics[width=2cm]{../img/qrContact.png}
-\end{minipage}
+    \includegraphics[width=2cm]{qrContact.png}
+  \end{minipage}
 \end{frame}
 
 \end{document}
