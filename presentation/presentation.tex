@@ -96,6 +96,9 @@
 
 
 \usepackage[english]{babel}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,positioning}
+\usetikzlibrary{overlay-beamer-styles}
 % or whatever
 
 \usepackage[utf8]{inputenc}
@@ -253,14 +256,172 @@
     \caption{Secure DMPC.}\label{alg:safeDMPC}
   \end{algorithm}
   }
+
 \end{frame}
 
 \begin{frame}
-  \begin{figure}[!t]
+  \begin{figure}[h]
     \centering
-    % inkscape -Dz flowchartAlg2.svg --export-latex -AflowchartAlg2.pdf
-    % \footnotesize
-    \def\svgwidth{.4\textwidth} \input{../img/flowchartAlg2.pdf_tex}
+  \scalebox{.6}{
+    \begin{tikzpicture}[font=\small,thick,node distance=.6cm and 6cm]
+      \draw[loosely dashed,
+      minimum width=2.5cm,
+      minimum height=1cm] (8cm,1cm) -- (8cm,-10cm);
+
+      \node[] at (5cm,0cm) {\Large Detection Phase};
+      \node[] at (11cm,0cm) {\Large Negotiation Phase};
+
+      \node[draw,
+      rounded rectangle,
+      fill=gray!90!black!50,
+      alt=<{2}>{fill=supelecRed!90,text=white},
+      minimum width=2.5cm,
+      minimum height=1cm] (block1) {Start};
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{3}>{fill=supelecRed!90,text=white},
+      below=of block1,
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block2) { Coordinator sends \\random $\vec{\theta}_{i}^{(h)}$};
+
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{4}>{fill=supelecRed!90,text=white},
+      below=of block2,
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block3) { Agents send \\ $\vec{\lambda}_{i}^{(h)}(\vec{\theta}_{i}^{(h)})$};
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      below=of block3,
+      fill=supelecRed!10,
+      alt=<{5}>{fill=supelecRed!90,text=white},
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block4) { Coordinator estimate parameters};
+
+      \node[draw,
+      diamond,
+      below=of block4,
+      minimum width=2.5cm,
+      fill=supelecRed!50,
+      alt=<{6}>{fill=supelecRed!90,text=white},
+      align=center,
+      inner sep=0] (block5) { Estimates\\ converge?};
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{7}>{fill=supelecRed!90,text=white},
+      right=1cm of block5,
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block6) { Coordinator detects \\selfish agents};
+
+
+      \node[coordinate,right=6.cm of block2] (block12) {};
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      right=of block12,
+      fill=supelecRed!10,
+      alt=<{8}>{fill=supelecRed!90,text=white},
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block7) { Coordinator sends \\$\vec{\theta}_i^{(h)}$};
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{9}>{fill=supelecRed!90,text=white},
+      below=of block7,
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block8) { Agents send \\$\vec{\lambda}_i(\vec{\theta}_{i}^{(h)})$};
+
+      \node[draw,
+      trapezium,
+      trapezium left angle = 65,
+      trapezium right angle = 115,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{10}>{fill=supelecRed!90,text=white},
+      below=of block8,
+      minimum width=3.5cm,
+      minimum height=1cm
+      ] (block9) { Coordinator updates \\allocation accordingly};
+
+      \node[draw,
+      diamond,
+      below=of block9,
+      minimum width=2.5cm,
+      fill=supelecRed!50,
+      alt=<{11}>{fill=supelecRed!90,text=white},
+      align=center,
+      inner sep=0] (block10) { Negotiation\\ converges?};
+
+      \node[draw,
+      rounded rectangle,
+      below=of block10,
+      fill=gray!90!black!50,
+      alt=<{12}>{fill=supelecRed!90,text=white},
+      minimum width=2.5cm,
+      minimum height=1cm,] (block11) { Apply first control};
+
+      \draw[-latex] (block1) edge (block2)
+      (block2) edge (block3)
+      (block3) edge (block4)
+      (block4) edge (block5);
+
+      \draw[-latex] (block7) edge (block8)
+      (block8) edge (block9)
+      (block9) edge (block10);
+
+      \draw[-latex] (block5) -- (block6)
+      node[pos=0.4,fill=white,inner sep=0]{Yes};
+
+      \draw[-latex] (block10) -- (block11)
+      node[pos=0.4,fill=white,inner sep=0]{Yes};
+
+      \draw[-latex] (block6) -| ($(block7.west) - (3cm,0)$) -- (block7.west);
+
+      \draw[-latex] (block10) -| ($(block7.east) + (1.5cm,0)$)
+      node[pos=0.25,fill=white,inner sep=0]{No} -- (block7.east);
+
+      \draw[-latex] (block5) -| ($(block2.west) - (1.5cm,0)$)
+      node[pos=0.25,fill=white,inner sep=0]{No} -- (block2.west);
+    \end{tikzpicture}
+    }
     \caption{Scheme of DMPC using a \emph{coordinator} and $M$ agents.}\label{fig:schemeQuantity}
   \end{figure}
 \end{frame}
