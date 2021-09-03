@@ -91,6 +91,7 @@
   \vskip0pt%
 }
 
+\setbeamertemplate{caption}[numbered]
   % or whatever (possibly just delete it)
 }
 
@@ -200,64 +201,266 @@
   \titlepage%
 \end{frame}
 
+\begin{frame}{Context}
+  \begin{figure}
+    \includegraphics<1>[width=.6\textwidth]{the_city_nothing.pdf}%
+    \includegraphics<2>[width=.6\textwidth]{the_city_houses.pdf}%
+    \includegraphics<3>[width=.6\textwidth]{the_city_buildings.pdf}%
+    \includegraphics<4>[width=.6\textwidth]{the_city_cars.pdf}%
+  \end{figure}
+  \onslide<5->{
+  \begin{minipage}{.45\textwidth}
+    \includegraphics[width=\textwidth]{the_city_cars.pdf}%
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \begin{itemize}
+      \item<6> Geographically distributed
+      \item<7> Coupled by constraints (energy)
+      \item<8> Optimization objectives
+            \begin{itemize}
+              \item Energy
+              \item User satisfaction
+              \item \dots
+            \end{itemize}
+      \item<9> Solution $\to$ Model Predictive Control
+    \end{itemize}
+  \end{minipage}
+  }
+\end{frame}
 
-% \begin{frame}[fragile]
-% \frametitle{An Algorithm For Finding Primes Numbers.}
-% \begin{semiverbatim}
-% \uncover<1->{\alert<0>{int main (void)}}
-% \uncover<1->{\alert<0>{\{}}
-% \uncover<1->{\alert<1>{ \alert<4>{std::}vector<bool> is_prime (100, true);}}
-% \uncover<1->{\alert<1>{ for (int i = 2; i < 100; i++)}}
-% \uncover<2->{\alert<2>{
-% if (is_prime[i])}}
-% \uncover<2->{\alert<0>{
-% \{}}
-% \uncover<3->{\alert<3>{
-% \alert<4>{std::}cout << i << " ";}}
-% \uncover<3->{\alert<3>{
-% for (int j = i; j < 100;}}
-% \uncover<3->{\alert<3>{
-% is_prime [j] = false, j+=i);}}
-% \uncover<2->{\alert<0>{
-% \}}}
-% \uncover<1->{\alert<0>{ return 0;}}
-% \uncover<1->{\alert<0>{\}}}
-% \end{semiverbatim}
-% \visible<4->{Note the use of \alert{\texttt{std::}}.}
+
+
+\begin{frame}{Model Predictive Control}
+  Find control input sequence that optimizes an objective function
+
+\begin{equation*}
+\begin{matrix}
+\underset{\vec{u}(k:k+N_{p}-1|k)}{\mathrm{minimize}}&\resizebox{0.35\textwidth}{!}{$ \overbrace{\sum_{j=1}^{N_{p}}\|\vec{v}(k+j|k)\|^{2}_{Q}+\|\vec{u}(k+j-1|k)\|^{2}_{R}}^{\textstyle J_{G}(k)}$}\\
+\mathrm{subject~ to}&
+\left.\begin{matrix}
+    \vec{x}(k+1)=f(\vec{x}(k),\vec{u}(k)) \\
+    g_{i}(\vec{x}(k),\vec{u}(k))=0\\
+    h_{k}(\vec{x}(k),\vec{u}(k))\leq0\\
+\end{matrix}
+\right\}
+\begin{aligned}
+  &\forall i\in\{1,\dots,N_{p}\}\\
+  &\forall j\in\{1,\dots,N_{p}\}\\
+  &\forall k\in\{1,\dots,N_{p}\}
+\end{aligned}
+\end{matrix}
+\end{equation*}
+  Using
+\end{frame}
+
+% \begin{frame}
+%   \centering
+%   \begin{minipage}{.65\linewidth}
+%     \begin{algorithm}[H]
+%       \DontPrintSemicolon
+%       Coordinator initializes $\vec{\theta}^{(0)}$ \;
+%       $p:=0$\;
+%       \Repeat{$\|\vec{\theta}^{(p)} -\vec{\theta}^{(p-1)}\|\leq\epsilon$}{
+%         Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}\p)$\;
+%         Coordinator updates allocations~\eqref{eq:thetaNegot}\;
+%         $p:=p+1$
+%       }
+%       \caption{Quantity decomposition based DMPC.}\label{alg:quantityAlg}
+%     \end{algorithm}
+%   \end{minipage}
 % \end{frame}
 
 \begin{frame}
-\SetKwBlock{negotPhase}{ Negotiation Phase:}{}
-\SetKwBlock{detectPhase}{ Detection Phase:}{}
-\scalebox{.8}{  \begin{algorithm}[H]
-    \DontPrintSemicolon
-    \detectPhase{
-    $h:=0$\;
-    \Repeat{
-    $\|\eta_{i}^{h}-\eta^{h-1}\|\leq\epsilon$
-  }{
-    Coordinator sets random $\vec{\theta}_{i}^{(h+1)}$ \;
-    Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}^{(h)})$\;
-    Coordinator estimates $\widehat{\tilde{P}}_{i}(k)^{(h)}$ and $\widehat{\tilde{\vec{s}}}_{i}(k)^{(h)}$ \;
-    $h:=h+1$\;
-  }
-    Coordinator computes $d_{i}$ using~\eqref{eq:2}\;
-  }
-    \negotPhase{
-    Coordinator initializes $\vec{\theta}^{(0)}$ \;
-    $p:=0$\;
+  \begin{figure}
+    \centering
+    \scalebox{.6}{
+      \begin{tikzpicture}[font=\small,thick,node distance=.6cm and 6cm]
+        \node[draw,
+        rounded rectangle,
+        fill=gray!90!black!50,
+        alt=<{2}>{fill=supelecRed!90,text=white},
+        minimum width=2.5cm,
+        minimum height=1cm] (block1) {Start};
 
-    \Repeat{$\|\vec{\theta}^{(p)} -\vec{\theta}^{(p-1)}\|\leq\epsilon$}{
-    Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}\p)$\;
+        \node[draw,
+        trapezium,
+        trapezium left angle = 65,
+        trapezium right angle = 115,
+        trapezium stretches,
+        align=center,
+        below=of block1,
+        fill=supelecRed!10,
+        alt=<{3}>{fill=supelecRed!90,text=white},
+        minimum width=3.5cm,
+        minimum height=1cm
+        ] (block7) { Coordinator sends \\$\vec{\theta}_i^{(h)}$};
+        \node[draw,
+        trapezium,
+        trapezium left angle = 65,
+        trapezium right angle = 115,
+        trapezium stretches,
+        align=center,
+        fill=supelecRed!10,
+        alt=<{4}>{fill=supelecRed!90,text=white},
+        below=of block7,
+        minimum width=3.5cm,
+        minimum height=1cm
+        ] (block8) { Agents send \\$\vec{\lambda}_i(\vec{\theta}_{i}^{(h)})$};
 
-    Coordinator updates allocation~\eqref{eq:thetaNegot} using adequate versions of $\vec{\lambda}_{i}$ for each agent: $\vec{\lambda}_{i}^{\star}(\vec{\theta}\p)$, if $d_{i}=0$ and ${\vec{\lambda}_{i}}_{\mathrm{rec}}$, if ${d_{i}=1}$\;
-    $p:=p+1$
-  }}
-    \caption{Secure DMPC.}\label{alg:safeDMPC}
-  \end{algorithm}
-  }
+        \node[draw,
+        trapezium,
+        trapezium left angle = 65,
+        trapezium right angle = 115,
+        trapezium stretches,
+        align=center,
+        fill=supelecRed!10,
+        alt=<{5}>{fill=supelecRed!90,text=white},
+        below=of block8,
+        minimum width=3.5cm,
+        minimum height=1cm
+        ] (block9) { Coordinator updates \\allocation};
 
+        \node[draw,
+        diamond,
+        below=of block9,
+        minimum width=2.5cm,
+        fill=supelecRed!50,
+        alt=<{6}>{fill=supelecRed!90,text=white},
+        align=center,
+        inner sep=0] (block10) { Negotiation\\ converges?};
+
+        \node[draw,
+        rounded rectangle,
+        below=of block10,
+        fill=gray!90!black!50,
+        alt=<{7}>{fill=supelecRed!90,text=white},
+        minimum width=2.5cm,
+        minimum height=1cm,] (block11) { Apply first control};
+
+        \draw[-latex] (block7) edge (block8)
+        (block1) edge (block7)
+        (block8) edge (block9)
+        (block9) edge (block10);
+
+        \draw[-latex] (block10) -- (block11)
+        node[pos=0.4,fill=white,inner sep=0]{Yes};
+
+        \draw[-latex] (block10) -| ($(block7.east) + (1.5cm,0)$)
+        node[pos=0.25,fill=white,inner sep=0]{No} -- (block7.east);
+
+      \end{tikzpicture}
+    }
+    \caption{Quantity decomposition based DMPC}\label{fig:quantityDecompDMPC}
+  \end{figure}
 \end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution:
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+
+\section[Vulnerabilities in DMPC based on Resource Allocation]{Vulnerabilities in distributed MPC based on Resource Allocation}
+
+\subsection{The Basic Problem That We Studied}
+
+\begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
+  \begin{itemize}
+  \item
+    Use \texttt{itemize} a lot.
+  \item
+    Use very short sentences or short phrases.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Make Titles Informative.}
+  \begin{block}{te}
+
+  \end{block}
+  You can create overlays\dots
+  \begin{itemize}
+  \item using the \texttt{pause} command:
+    \begin{itemize}
+    \item
+      First item.
+      \pause
+    \item
+      Second item.
+    \end{itemize}
+  \item
+    using overlay specifications:
+    \begin{itemize}
+    \item<3->
+      First item.
+    \item<4->
+      Second item.
+    \end{itemize}
+  \item
+    using the general \texttt{uncover} command:
+    \begin{itemize}
+      \uncover<5->{\item
+        First item.}
+      \uncover<6->{\item
+        Second item.}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Previous Work}
+
+\begin{frame}{Make Titles Informative.}
+\end{frame}
+
+\section{Securing the DMPC}
+% \begin{frame}
+% \SetKwBlock{negotPhase}{ Negotiation Phase:}{}
+% \SetKwBlock{detectPhase}{ Detection Phase:}{}
+% \scalebox{.8}{  \begin{algorithm}[H]
+%     \DontPrintSemicolon
+%     \detectPhase{
+%     $h:=0$\;
+%     \Repeat{
+%     $\|\eta_{i}^{h}-\eta^{h-1}\|\leq\epsilon$
+%   }{
+%     Coordinator sets random $\vec{\theta}_{i}^{(h+1)}$ \;
+%     Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}^{(h)})$\;
+%     Coordinator estimates $\widehat{\tilde{P}}_{i}(k)^{(h)}$ and $\widehat{\tilde{\vec{s}}}_{i}(k)^{(h)}$ \;
+%     $h:=h+1$\;
+%   }
+%     Coordinator computes $d_{i}$ using~\eqref{eq:2}\;
+%   }
+%     \negotPhase{
+%     Coordinator initializes $\vec{\theta}^{(0)}$ \;
+%     $p:=0$\;
+
+%     \Repeat{$\|\vec{\theta}^{(p)} -\vec{\theta}^{(p-1)}\|\leq\epsilon$}{
+%     Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}\p)$\;
+
+%     Coordinator updates allocation~\eqref{eq:thetaNegot} using adequate versions of $\vec{\lambda}_{i}$ for each agent: $\vec{\lambda}_{i}^{\star}(\vec{\theta}\p)$, if $d_{i}=0$ and ${\vec{\lambda}_{i}}_{\mathrm{rec}}$, if ${d_{i}=1}$\;
+%     $p:=p+1$
+%   }}
+%     \caption{Secure DMPC.}\label{alg:safeDMPC}
+%   \end{algorithm}
+%   }
+% \end{frame}
 
 \begin{frame}
   \begin{figure}[h]
@@ -422,120 +625,13 @@
       node[pos=0.25,fill=white,inner sep=0]{No} -- (block2.west);
     \end{tikzpicture}
     }
-    \caption{Scheme of DMPC using a \emph{coordinator} and $M$ agents.}\label{fig:schemeQuantity}
+    \caption{Secure DMPC}\label{fig:secureDMPC}
   \end{figure}
 \end{frame}
-
-\begin{frame}
-  \centering
-  \begin{minipage}{.65\linewidth}
-    \begin{algorithm}[H]
-      \DontPrintSemicolon
-      Coordinator initializes $\vec{\theta}^{(0)}$ \;
-      $p:=0$\;
-      \Repeat{$\|\vec{\theta}^{(p)} -\vec{\theta}^{(p-1)}\|\leq\epsilon$}{
-        Subsystems solve~\eqref{eq:DOP_local}, and send $\vec{\lambda}^{\star}_{i}(\vec{\theta}\p)$\;
-        Coordinator updates allocations~\eqref{eq:thetaNegot}\;
-        $p:=p+1$
-      }
-      \caption{Quantity decomposition based DMPC.}\label{alg:quantityAlg}
-    \end{algorithm}
-  \end{minipage}
-\end{frame}
-
-\begin{frame}{Outline}
-  \tableofcontents
-  % You might wish to add the option [pausesections]
-\end{frame}
-
-
-% Structuring a talk is a difficult task and the following structure
-% may not be suitable. Here are some rules that apply for this
-% solution:
-
-% - Exactly two or three sections (other than the summary).
-% - At *most* three subsections per section.
-% - Talk about 30s to 2min per frame. So there should be between about
-%   15 and 30 frames, all told.
-
-% - A conference audience is likely to know very little of what you
-%   are going to talk about. So *simplify*!
-% - In a 20min talk, getting the main ideas across is hard
-%   enough. Leave out details, even if it means being less precise than
-%   you think necessary.
-% - If you omit details that are vital to the proof/implementation,
-%   just say so once. Everybody will be happy with that.
-
-
-\section{Motivation}
-
-\subsection{The Basic Problem That We Studied}
-
-\begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
-  % - A title should summarize the slide in an understandable fashion
-  %   for anyone how does not follow everything on the slide itself.
-
-  \begin{itemize}
-  \item
-    Use \texttt{itemize} a lot.
-  \item
-    Use very short sentences or short phrases.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Make Titles Informative.}
-  \begin{block}{te}
-
-  \end{block}
-  You can create overlays\dots
-  \begin{itemize}
-  \item using the \texttt{pause} command:
-    \begin{itemize}
-    \item
-      First item.
-      \pause
-    \item
-      Second item.
-    \end{itemize}
-  \item
-    using overlay specifications:
-    \begin{itemize}
-    \item<3->
-      First item.
-    \item<4->
-      Second item.
-    \end{itemize}
-  \item
-    using the general \texttt{uncover} command:
-    \begin{itemize}
-      \uncover<5->{\item
-        First item.}
-      \uncover<6->{\item
-        Second item.}
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-
-\subsection{Previous Work}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
-
-
 
 \section{Our Results/Contribution}
 
 \subsection{Main Results}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
 
 \begin{frame}{Make Titles Informative.}
 \end{frame}
@@ -545,14 +641,6 @@
 
 \begin{frame}{Make Titles Informative.}
 \end{frame}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}{Make Titles Informative.}
-\end{frame}
-
-
 
 \section*{Summary}
 
@@ -568,8 +656,7 @@
             Sub-problems structure has time invariant parameters.
             \pause
       \item
-            Attack can be estimated using these parameters.
-            \pause
+            Attacks can be detected using these parameters.
     \end{enumerate}
   \end{minipage}
   \pause
@@ -578,9 +665,11 @@
   \begin{minipage}[t]{.45\textwidth}
     \begin{itemize}
       \item Outlook
+            \pause
             \begin{itemize}
               \item
                     Inequality Constraints yield Hybrid behavior
+                    \pause
               \item
                     Non-linear attack model
             \end{itemize}
@@ -589,12 +678,13 @@
 \end{frame}
 
 
-\nocite{VelardeEtAl2017a}
+% \nocite{VelardeEtAl2017a}
 % All of the following is optional and typically not needed.
 % \appendix
 % \section<presentation>*{\appendixname}
 % \subsection<presentation>*{For Further Reading}
 
+\appendix
 \begin{frame}[allowframebreaks]
 % \bibliographystyle{IEEEtran}
 % \bibliography{../article/bibliography}
@@ -627,7 +717,6 @@ defense mechanism for distributed model predictive control,''
     2000.
   \end{thebibliography}
 \end{frame}
-
 \begin{frame}[plain]
   \centering
   \vfill
