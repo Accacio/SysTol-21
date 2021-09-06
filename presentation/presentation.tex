@@ -208,7 +208,7 @@
     \includegraphics<3>[width=.6\textwidth]{the_city_buildings.pdf}%
     \includegraphics<4>[width=.6\textwidth]{the_city_cars.pdf}%
   \end{figure}
-  \onslide<5->{
+  \only<5->{
   \begin{minipage}{.45\textwidth}
     \includegraphics[width=\textwidth]{the_city_cars.pdf}%
   \end{minipage}
@@ -231,26 +231,62 @@
 
 
 \begin{frame}{Model Predictive Control}
-  Find control input sequence that optimizes an objective function
+  Objective: Find control input sequence that optimizes an objective function
+  \only<1-5>{\begin{equation*}
+    \begin{matrix}
+      \underset{\vec{u}(k:k+\alert<3>{N_{p}}-1|k)}{\mathrm{optimize}}&\alert<2>{J(\vec{x}(k),\vec{u}(k))}\\
+      \mathrm{subject~ to}&
+      \left.
+        \begin{matrix}
+          \alert<4>{\vec{x}(\xi+1)=f(\vec{x}(\xi),\vec{u}(\xi))}\\
+          \alert<5>{g_{i}(\vec{x}(\xi),\vec{u}(\xi))\leq0}\\
+          \alert<5>{h_{j}(\vec{x}(\xi),\vec{u}(\xi))=0}\\
+        \end{matrix}
+      \right\}
+      \begin{aligned}
+        &\forall \xi\in\{1,\dots,\alert<3>{N_{p}}\}\\
+        &\forall i\in\{1,\dots,m\}\\
+        &\forall j\in\{1,\dots,p\}
+      \end{aligned}
+    \end{matrix}
+  \end{equation*}}%
+\only<6->{
+  \begin{equation*}
+    \begin{matrix}
+      \underset{\vec{u}(k:k+N_{p}-1|k)}{\mathrm{minimize}}&  \sum_{j=1}^{N_{p}}\|\vec{v}(k+j|k)\|^{2}_{Q}+\|\vec{u}(k+j-1|k)\|^{2}_{R}\\
+      \mathrm{subject~ to}&
+      \left.
+        \begin{matrix}
+          \vec{x}(\xi+1)=f(\vec{x}(\xi),\vec{u}(\xi)) \\
+          g_{i}(\vec{x}(\xi),\vec{u}(\xi))\leq0\\
+          h_{j}(\vec{x}(\xi),\vec{u}(\xi))=0\\
+        \end{matrix}
+      \right\}
+      \begin{aligned}
+        &\forall \xi\in\{1,\dots,N_{p}\}\\
+        &\forall i\in\{1,\dots,m\}\\
+        &\forall j\in\{1,\dots,p\}
+      \end{aligned}
+    \end{matrix}
+  \end{equation*}
+  }%
+\end{frame}
 
-\begin{equation*}
-\begin{matrix}
-\underset{\vec{u}(k:k+N_{p}-1|k)}{\mathrm{minimize}}&\resizebox{0.35\textwidth}{!}{$ \overbrace{\sum_{j=1}^{N_{p}}\|\vec{v}(k+j|k)\|^{2}_{Q}+\|\vec{u}(k+j-1|k)\|^{2}_{R}}^{\textstyle J_{G}(k)}$}\\
-\mathrm{subject~ to}&
-\left.\begin{matrix}
-    \vec{x}(k+1)=f(\vec{x}(k),\vec{u}(k)) \\
-    g_{i}(\vec{x}(k),\vec{u}(k))=0\\
-    h_{k}(\vec{x}(k),\vec{u}(k))\leq0\\
-\end{matrix}
-\right\}
-\begin{aligned}
-  &\forall i\in\{1,\dots,N_{p}\}\\
-  &\forall j\in\{1,\dots,N_{p}\}\\
-  &\forall k\in\{1,\dots,N_{p}\}
-\end{aligned}
-\end{matrix}
-\end{equation*}
-  Using
+\begin{frame}{Model Predictive Control}
+  Find sequence, \pause apply first control, \pause rinse repeat \pause $\to$ Receding Horizon
+
+  \begin{figure}
+    \centering
+    \foreach \i in {1,...,10}{\includegraphics<\i>[width=.5\textwidth]{mpc\i.pdf}%
+    }
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item Problem: Complexity depends on $N_{p},m,p$ and sizes of $\vec{x}$ and $\vec{u}$
+    \item Solution: Divide and Conquer
+  \end{itemize}
 \end{frame}
 
 % \begin{frame}
