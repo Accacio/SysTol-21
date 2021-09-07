@@ -100,6 +100,11 @@
 \usepackage{tikz}
 \usetikzlibrary{calc,shapes,positioning}
 \usetikzlibrary{overlay-beamer-styles}
+\usepackage{pgfplots}
+ \usetikzlibrary{plotmarks}
+  \usetikzlibrary{arrows.meta}
+  \usepgfplotslibrary{patchplots}
+  \usepackage{grffile}
 % or whatever
 
 \usepackage[utf8]{inputenc}
@@ -272,21 +277,102 @@
   }%
 \end{frame}
 
+\newlength\fheight
+\newlength\fwidth
+\setlength\fwidth{.35\textwidth}
+\setlength\fheight{.8\fwidth}
+
 \begin{frame}{Model Predictive Control}
-  Find sequence, \pause apply first control, \pause rinse repeat \pause $\to$ Receding Horizon
+  \only<1->{Find optimal control sequence}%
+  \only<2->{, apply first element}%
+  \only<3->{, rinse repeat}%
+  \only<4->{ $\to$ Receding Horizon}%
 
   \begin{figure}
     \centering
-    \foreach \i in {1,...,10}{\includegraphics<\i>[width=.5\textwidth]{mpc\i.pdf}%
+    \foreach \i in {1,...,10}{%
+      % \includegraphics<\i>[width=.5\textwidth]{mpc\i.pdf}%
+      \only<{\i}>{\input{../img/mpcState\i.tex}}%
+      \only<{\i}>{\input{../img/mpcControl\i.tex}}%
     }
   \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[label=current]
   \begin{itemize}
     \item Problem: Complexity depends on $N_{p},m,p$ and sizes of $\vec{x}$ and $\vec{u}$
     \item Solution: Divide and Conquer
   \end{itemize}
+  \vfill
+  \begin{figure}
+    \centering
+    \only<1>{
+    \begin{tikzpicture}[font=\small,thick,node distance=.6cm and 6cm]
+      \node[draw,
+      rectangle,
+      trapezium stretches,
+      align=center,
+      fill=supelecRed!10,
+      alt=<{3}>{fill=supelecRed!90,text=white},
+      minimum width=3.5cm,
+      minimum height=4cm
+      ] (block1) {MPC};
+    \end{tikzpicture}
+    }%
+    \only<2>{
+      \tikzset{mpcSmall/.style={
+      rectangle,
+      align=center,
+      fill=supelecRed!10,
+      minimum width=2.cm,
+      minimum height=.5cm},
+    coordinator/.style={
+    rectangle,
+    trapezium stretches,
+    align=center,
+    fill=supelecRed!10,
+    minimum width=1cm,
+    minimum height=4cm
+    }}
+  \begin{tikzpicture}[font=\small,thick,node distance=.35cm and .5cm]
+
+    \node[draw,
+    mpcSmall
+    ] (block1) {MPC};
+
+    \node[draw,
+    mpcSmall,
+    below=of block1,
+    ] (block2) {MPC};
+
+    \node[draw,
+    mpcSmall,
+    below=of block2,
+    ] (block3) {MPC};
+
+    \node[draw,
+    mpcSmall,
+    fill=none,
+    draw=white,
+    below=of block3,
+    ] (block4) {\vdots};
+    \node[draw,
+    mpcSmall,
+    below=of block4,
+    ] (block5) {MPC};
+
+    \node[draw,
+    coordinator,
+    right=of block3,
+    ] (coordinator) {\rotatebox{90}{Coordinator}};
+
+\draw (block2) -- (coordinator);
+\draw (block3) -- (coordinator);
+
+  \end{tikzpicture}
+}%
+
+\end{figure}
 \end{frame}
 
 % \begin{frame}
