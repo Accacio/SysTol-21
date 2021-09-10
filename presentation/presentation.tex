@@ -2,6 +2,14 @@
 
 \documentclass[aspectratio=169]{beamer}
 % \includeonlyframes{current}
+\usepackage{pgfpages}
+% \setbeameroption{show notes on second screen}
+\newif\ifwebcast
+\webcastfalse
+\newcommand{\webcast}{\webcasttrue}
+% \webcast
+\newcommand<>{\script}[1]{\note{\onslide#2{#1}}}
+
 
 \mode<presentation>
 {
@@ -16,6 +24,7 @@
   \useoutertheme{split}
   \useinnertheme{circles}
   \usefonttheme[onlymath]{serif}
+
 \definecolor{supelecRed}{RGB}{120,30,56}
 \definecolor{supelecPurple}{RGB}{104,95,115}
 %
@@ -49,6 +58,7 @@
 \makeatletter
 \protected\def\protectedempty{}
 \setbeamertemplate{page number in head/foot}[appendixframenumber]
+
 \setbeamertemplate{footline}
 {%
   \leavevmode%
@@ -69,15 +79,32 @@
   }%
   \vskip0pt%
 }
-\makeatother
+
+\setbeamertemplate{note page}{
+  \vfill
+\insertnote
+  \vfill
+}
+
+\setbeamersize{text margin right=1.5cm}
+\setbeamersize{text margin left=1.5cm}
 
 \setbeamertemplate{sidebar right}{
+  % \vskip1.3cm%
+  % \llap{\tikz{\draw[fill=black] (.75,0) circle [radius=.75cm]}\hskip0.2cm}%
   \vfill%
   \llap{\insertlogo\hskip0.2cm}%
   \vskip3pt%
-  \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
-  \vskip2pt%
 }
+\setbeamertemplate{sidebar left}{
+  \vfill%
+  \ifwebcast{\hspace{3pt}\tikz{\draw[fill=pink,draw=pink] (.6,0) circle [radius=.6cm]}}%
+  \else%
+  % \hspace{3pt}\tikz{\draw[fill=white,draw=white] (.6,0) circle [radius=.6cm]}%
+  \fi
+  \vskip3pt%
+}
+
 \setbeamertemplate{headline}
 {%
   \leavevmode%
@@ -86,7 +113,6 @@
       \centering
       \usebeamerfont{author in head/foot}\insertsection{}
     \end{beamercolorbox}%
-  % }
     \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{subsection in head/foot}%
       \centering
       \insertsubsection{}
@@ -196,7 +222,7 @@
 
 \subject{}
 
-\logo{\includegraphics[height=.8cm]{logos/supelec.jpeg}}
+\logo{\includegraphics[width=1.5cm]{logos/supelec.jpeg}}
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
@@ -1121,7 +1147,7 @@ defense mechanism for distributed model predictive control,''
 \begin{frame}[plain]
   \centering
   \vfill
-  Questions?
+  Thank you!
   \vfill
   \begin{minipage}[t]{.45\linewidth}
     \small
@@ -1140,6 +1166,8 @@ defense mechanism for distributed model predictive control,''
 
     \includegraphics[width=2cm]{qrContact.png}
   \end{minipage}
+  \ifwebcast{\tikz{\draw[fill=pink,draw=pink] (1.5,0) circle [radius=1.5cm]}}%
+  \fi
 \end{frame}
 
 \end{document}
