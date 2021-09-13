@@ -237,6 +237,9 @@
 
 \begin{frame}[plain]
   \titlepage%
+  \note{15 minutes !!!!\\}
+  \script{Hello, I'm Rafael Accácio and on behalf of my co Authors Romain Bourdais and Hervé Guéguen I'm here to present our paper for the SysTol'21 called «Detection and Mitigation of Corrupted Information in Distributed Model Predictive Control Based on Resource Allocation».\\}
+  \script{This presentation is available at the address shown or by flashing the QR code.\\}
 \end{frame}
 
 % \begin{frame}{Context}
@@ -268,36 +271,45 @@
 
 \begin{frame}{Context}
   \centering
-  Smart City\\
+  % \only<6>{
+  % Smart City\\}
   \begin{minipage}{.45\textwidth}
     \includegraphics[width=\textwidth]{the_city_cars.pdf}%
   \end{minipage}
-  \only<2-5>{
+  \only<1-4>{
   \begin{minipage}{.5\textwidth}
     \begin{itemize}
-      \item<2> Energy Distribution System
-      \item<3> Traffic management
-      \item<4> Heat distribution
-      \item<5> Water distribution
-      \item<5>[] \dots
+      \item<+> Energy Distribution System
+      \item<+> Traffic management
+      \item<+> Heat distribution
+      \item<+> Water distribution\\\dots
     \end{itemize}
   \end{minipage}
   }
-\only<6->{
+\only<5->{
   \begin{minipage}{.5\textwidth}
     \begin{itemize}
-      \item<6> Geographically distributed
-      \item<7> Coupled by constraints (energy)
-      \item<8> Optimization objectives
+      \item<5> Geographically distributed
+      \item<6> Coupled by constraints (energy)
+      \item<7> Optimization objectives
             \begin{itemize}
               \item Energy
               \item User satisfaction
               \item \dots
             \end{itemize}
-      \item<9> Solution $\to$ Model Predictive Control
+      \item<8-> Solution $\to$ Model Predictive Control
     \end{itemize}
   \end{minipage}
   }
+  \script<1->{With the ever increasing connection between systems such as Energy Distribution System, }
+  \script<2->{Traffic management, }
+  \script<3->{Heat distribution, }
+  \script<4->{Water distribution and many others we stroll to the so called smart cities\\}
+  \script<5->{The systems are usually }
+  \script<5->{Geographically distributed }
+  \script<6->{Coupled by constraints as maximum input power or energy }
+  \script<7->{and when they are implemented we try to optimize objectives such as cost, energy, user satisfaction and others.\\ }
+  \script<8>{A solution is to use Model Predictive Control.}
 \end{frame}
 
 
@@ -341,6 +353,12 @@
     \end{matrix}
   \end{equation*}
   }%
+  \script<1->{The Model based Predictive Control, for those who don't know is a control strategy where the control is computed by solving an optimization problem }
+  \script<2->{with cost J. }
+  \script<3->{The system's response for the input u is predicted for a period Np, }
+  \script<4->{using the model of the system. }
+  \script<5->{And we then add the equality and inequality constraints. }
+  \script<6->{Usually the optimization problem is to minimize a quadratic objective function.}
 \end{frame}
 
 \newlength\fheight
@@ -349,6 +367,7 @@
 \setlength\fheight{.8\fwidth}
 
 \begin{frame}{Model Predictive Control}
+  \small
   \only<1->{Find optimal control sequence}%
   \only<2->{, apply first element}%
   \only<3->{, rinse repeat}%
@@ -362,12 +381,15 @@
       \only<{\i}>{\input{../img/mpcControl\i.tex}}%
     }
   \end{figure}
+  \script<1->{We find an optimal control sequence }
+  \script<2->{We apply only the first element }
+  \script<3->{and then we repeat }
 \end{frame}
 
 \begin{frame}{Distributed Model Predictive Control}
   \begin{itemize}
     \item<1> Problem: Complexity depends on $N_{p},m,p$ and sizes of $\vec{x}$ and $\vec{u}$
-    \item<2> Solution: Divide and Conquer
+    \item<2-> Solution: Divide and Conquer
   \end{itemize}
   \vfill
   \centering
@@ -387,7 +409,7 @@
           ] (block1) {MPC};
         \end{tikzpicture}
       }%
-      \only<2>{
+      \only<2->{
         \begin{tikzpicture}[font=\small,thick,node distance=.2cm and .5cm,
           mpcSmall/.style={
             rectangle,
@@ -442,11 +464,13 @@
       }%
     \end{figure}
   \end{minipage}
+  \script<1->{The problem is when the systems are large, since the complexity depends on Np the number of constraints and sizes of input and states }
+  \script<2->{The solution is to divide the problem where it is separable and use a coordinator to create a consensus in the coupling variables or constraints}
 \end{frame}
 
 \begin{frame}{Distributed Model Predictive Control}{Quantity Decomposition | Resource Allocation}
   \centering
-  \only<4>{
+  \only<4->{
     \begin{minipage}[t]{.3\linewidth}
       \begin{figure}[!t]
         \scalebox{.7}{\footnotesize \def\svgwidth{8cm} \input{../img/diagQuantMod.pdf_tex}}
@@ -512,6 +536,11 @@
       \end{equation*}
     \end{minipage}
   }
+  \script<1->{An example of decomposition method is the Quantity decomposition where a semi-decomposable problem with a global coupling constraints can be decomposed into }
+  \script<2->{multiple sub-problems, which can be solved in parallel, and a master problem which corresponds to the initial problem. \\
+   Those coupling constraints are replaced by local constraints with an allocation theta i. }
+  \script<3->{The allocation for each sub-problem is updated by a projected subgradient method solving the master problem, thus the original problem. The subgradient used in this method is the dual variable associated to the coupling constraints}
+  \script<4->{We can represent the sub-problems as agents and the master problem as a coordinator. The coordinator sends the allocations for each agent, which responds with a dual variable. }
 \end{frame}
 % \begin{frame}
 %   \centering
@@ -531,87 +560,102 @@
 % \end{frame}
 
 \begin{frame}{Quantity Decomposition | Resource Allocation}
-  \begin{figure}
-    \centering
-    \scalebox{.55}{
-      \begin{tikzpicture}[font=\small,thick,node distance=.6cm and 6cm]
-        \node[draw,
-        rounded rectangle,
-        fill=gray!90!black!50,
-        alt=<{2}>{fill=supelecRed!90,text=white},
-        minimum width=2.5cm,
-        minimum height=1cm] (block1) {Start};
+  \centering
+  \begin{minipage}{.45\linewidth}
+    \begin{figure}
+      \centering
+      \scalebox{.55}{
+        \begin{tikzpicture}[font=\small,thick,node distance=.6cm and 6cm]
+          \node[draw,
+          rounded rectangle,
+          fill=gray!90!black!50,
+          alt=<{2}>{fill=supelecRed!90,text=white},
+          minimum width=2.5cm,
+          minimum height=1cm] (block1) {Start};
 
-        \node[draw,
-        trapezium,
-        trapezium left angle = 65,
-        trapezium right angle = 115,
-        trapezium stretches,
-        align=center,
-        below=of block1,
-        fill=supelecRed!10,
-        alt=<{3}>{fill=supelecRed!90,text=white},
-        minimum width=3.5cm,
-        minimum height=1cm
-        ] (block7) { Coordinator sends \\$\vec{\theta}_i^{(h)}$};
-        \node[draw,
-        trapezium,
-        trapezium left angle = 65,
-        trapezium right angle = 115,
-        trapezium stretches,
-        align=center,
-        fill=supelecRed!10,
-        alt=<{4}>{fill=supelecRed!90,text=white},
-        below=of block7,
-        minimum width=3.5cm,
-        minimum height=1cm
-        ] (block8) { Agents send \\$\vec{\lambda}_i(\vec{\theta}_{i}^{(h)})$};
+          \node[draw,
+          trapezium,
+          trapezium left angle = 65,
+          trapezium right angle = 115,
+          trapezium stretches,
+          align=center,
+          below=of block1,
+          fill=supelecRed!10,
+          alt=<{3}>{fill=supelecRed!90,text=white},
+          minimum width=3.5cm,
+          minimum height=1cm
+          ] (block7) { Coordinator sends \\$\vec{\theta}_i^{(h)}$};
+          \node[draw,
+          trapezium,
+          trapezium left angle = 65,
+          trapezium right angle = 115,
+          trapezium stretches,
+          align=center,
+          fill=supelecRed!10,
+          alt=<{4}>{fill=supelecRed!90,text=white},
+          below=of block7,
+          minimum width=3.5cm,
+          minimum height=1cm
+          ] (block8) { Agents send \\$\vec{\lambda}_i(\vec{\theta}_{i}^{(h)})$};
 
-        \node[draw,
-        trapezium,
-        trapezium left angle = 65,
-        trapezium right angle = 115,
-        trapezium stretches,
-        align=center,
-        fill=supelecRed!10,
-        alt=<{5}>{fill=supelecRed!90,text=white},
-        below=of block8,
-        minimum width=3.5cm,
-        minimum height=1cm
-        ] (block9) { Coordinator updates \\allocation};
+          \node[draw,
+          trapezium,
+          trapezium left angle = 65,
+          trapezium right angle = 115,
+          trapezium stretches,
+          align=center,
+          fill=supelecRed!10,
+          alt=<{5}>{fill=supelecRed!90,text=white},
+          below=of block8,
+          minimum width=3.5cm,
+          minimum height=1cm
+          ] (block9) { Coordinator updates \\allocation};
 
-        \node[draw,
-        diamond,
-        below=of block9,
-        minimum width=2.5cm,
-        fill=supelecRed!50,
-        alt=<{6}>{fill=supelecRed!90,text=white},
-        align=center,
-        inner sep=0] (block10) { Negotiation\\ converges?};
+          \node[draw,
+          diamond,
+          below=of block9,
+          minimum width=2.5cm,
+          fill=supelecRed!50,
+          alt=<{6}>{fill=supelecRed!90,text=white},
+          align=center,
+          inner sep=0] (block10) { Negotiation\\ converges?};
 
-        \node[draw,
-        rounded rectangle,
-        below=of block10,
-        fill=gray!90!black!50,
-        alt=<{7}>{fill=supelecRed!90,text=white},
-        minimum width=2.5cm,
-        minimum height=1cm,] (block11) { Apply first control};
+          \node[draw,
+          rounded rectangle,
+          below=of block10,
+          fill=gray!90!black!50,
+          alt=<{7}>{fill=supelecRed!90,text=white},
+          minimum width=2.5cm,
+          minimum height=1cm,] (block11) { Apply first control};
 
-        \draw[-latex] (block7) edge (block8)
-        (block1) edge (block7)
-        (block8) edge (block9)
-        (block9) edge (block10);
+          \draw[-latex] (block7) edge (block8)
+          (block1) edge (block7)
+          (block8) edge (block9)
+          (block9) edge (block10);
 
-        \draw[-latex] (block10) -- (block11)
-        node[pos=0.4,fill=white,inner sep=0]{Yes};
+          \draw[-latex] (block10) -- (block11)
+          node[pos=0.4,fill=white,inner sep=0]{Yes};
 
-        \draw[-latex] (block10) -| ($(block7.east) + (1.5cm,0)$)
-        node[pos=0.25,fill=white,inner sep=0]{No} -- (block7.east);
+          \draw[-latex] (block10) -| ($(block7.east) + (1.5cm,0)$)
+          node[pos=0.25,fill=white,inner sep=0]{No} -- (block7.east);
 
-      \end{tikzpicture}
-    }
-    \caption{Quantity decomposition based DMPC}\label{fig:quantityDecompDMPC}
-  \end{figure}
+        \end{tikzpicture}
+      }
+      % \caption{Quantity decomposition based DMPC}\label{fig:quantityDecompDMPC}
+    \end{figure}
+  \end{minipage}
+  \only<7->{\begin{minipage}{.45\linewidth}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth]{dmpcQuantity4systemsTriche_.mat_thetalambdanegot.pdf}
+    \end{figure}
+  \end{minipage}}
+  \script<1->{In a flowchart for a quantity decomposition based DMPC,}
+  \script<3->{the coordinator sends the allocation theta, }
+  \script<4->{the agents send the dual variable lambda, }
+  \script<5->{the coordinator updates the allocation. }
+  \script<6->{If negotiation converges, }
+  \script<7->{then the negotiation ends and each agent applies the first element of the control found}
 \end{frame}
 
 \begin{frame}{}
@@ -619,12 +663,17 @@
   \vfill
 What if agents send a non-agreed $\vec{\lambda}_{i}$?
   \vfill
+  \script<1>{But what if the agents send a non-agreed lambda?}
 \end{frame}
 
 \begin{frame}{Outline}
   % \tableofcontents
-  \tableofcontents[subsectionstyle=show/show/show]
+  \tableofcontents[subsectionstyle=show/show/show,pausesections]
   % You might wish to add the option [pausesections]
+  \script<1->{To respond this this presentation is divided into 3 parts.}
+  \script<1->{First We present the vulnerabilites of this decomposition method, }
+  \script<2->{We propose one way to secure the method,}
+  \script<3->{and finally we present our results.}
 \end{frame}
 
 
@@ -656,7 +705,8 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
     \item<1-> $\vec{\lambda}_{i}$ is the only interface with coordination
     \item<2-> Non-cooperative agent sends $\tilde{\vec{\lambda}}_{i}=\gamma_{i}(\vec{\lambda}_{i})$\pause
   \end{itemize}
-
+\script<1->{How can an agent attack the system? Its only interface with the coordination is lambda}
+\script<2->{so we suppose it attacks by sending a different $lambda_i$, modified by a function $gamma_i$ of $lambda_i$ }
 \end{frame}
 
 \subsection{Consequences}
@@ -680,9 +730,16 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       \end{itemize}
     \end{exampleblock}
   \end{minipage}
+\script<1->{We give an example of 4 agents negotiating }
+\script<2->{Agent 1 is non-cooperative\\ }
+\script<3->{It uses a linear cheating function gamma tau times identity times the original lambda i\\ }
+\script<3->{In the figure we can see the cost functions for each agent, we see that agent 1 cost decreases if we increase tau, but the overall cost is increased, The minimum value of the global cost is when \\ }
+\script<4->{tau is equal to one. If tau is close to zero it increases its cost and if tau is too high\\ }
+\script<5->{it can turn the negotiation unstable \\ }
 \end{frame}
 
 \section{Securing the DMPC}
+\script<1->{In order to secure the method let's analyze the subproblems \\ }
 
 \subsection{Analysis of Subproblems}
 
@@ -726,6 +783,14 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
     \centering
     where ${\alert<7>{P_{i}}={(\Theta_{i}H_{i}^{-1}\Theta_{i}\T)}^{-1}}$ and ${\alert<8>{\vec{s}_{i}(k)}=P_{i}\Theta_{i}H_{i}^{-1}\vec{f}_{i}(k)}$
   }
+\script<1->{If we have a linear system with a quadratic objective function as in the reference tracking problem where we want to minimize the tracking error and the input power\\ }
+\script<2->{we can rewrite as a quadratic program\\ }
+\script<3->{with parameters H\\ }
+\script<4->{and f \\ }
+\script<5->{If we have equality constraints, the dual variables can be calculated explicitly\\ }
+\script<6->{it is an affine function with parameters P and s\\ }
+\script<7->{Observe that P does not depend on the time k\\ }
+\script<8->{meanwhile s does depend, we can use these facts for the detection and mitigation mechanisms\\ }
 \end{frame}
 
 \subsection{Detection Mechanism}
@@ -736,7 +801,9 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
 \pause
 \begin{assumption}
   Attacker chooses $\tilde{\vec{\lambda}_{i}}=\gamma_{i}(\vec{\lambda}_{i})=T_{i}(k)\vec{\lambda}_{i} $
-  $\to$ $-T_{i}(k)P_{i}\vec{\theta}_{i}-T_{i}(k)\vec{s}_{i}(k)$
+
+
+ \pause $-T_{i}(k)P_{i}\vec{\theta}_{i}-T_{i}(k)\vec{s}_{i}(k)$ $\to$ $-\tilde{P}_{i}\vec{\theta}_{i}-\tilde{\vec{s}_{i}}(k)$
 \end{assumption}
 \pause
 \begin{itemize}
@@ -750,6 +817,12 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
 \pause
 \item If $\widehat{\tilde{{P}}}_{i}(k)\neq\bar{{P}}_{i}$ $\to$ Attack
 \end{itemize}
+\script<1->{For the attack detection, let's assume we know the nominal P, called P bar \\ }
+\script<2->{And we also assume the attacker chooses a linear attack where the lambda sent is equal to a matrix T times the original lambda which yields the formula shown \\ }
+\script<3->{with modified P and s, called P tilde and s tilde\\ }
+\script<4->{Now we can estimate P tilde and s tilde for a given negotiation in time k\\ }
+\script<5->{and if the estimated P tilde is different from the nominal P, then there is an attack\\ }
+
 \end{frame}
 
 \begin{frame}{About Estimation}
@@ -765,9 +838,14 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
           \pause
     \item Solution: Send sequence of random values of $\vec{\theta}_{i}$ until estimates converge
   \end{itemize}
+\script<1->{In order to estimate the modified P and s, we use recursive least squares\\ }
+\script<2->{The problem of estimating the value during a normal negotiation is that it fails\\ }
+\script<3->{Consecutive lambdas and thetas are linearly dependent, since they are calculate via the projected subgradient method, which gives us low input excitation\\ }
+\script<4->{In order to increase the input excitation we send a sequence of random theta until the convergence is attained\\ }
 \end{frame}
 
 \begin{frame}{Detection}{In detail}
+  \pause
   \begin{itemize}
     \item Error ${E_{i}(k) =\|\widehat{\tilde{P}}_{i}(k)-\bar{P}_{i}\|_{F}}$
           \pause
@@ -777,6 +855,11 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
           \pause
     \item $d_{i}=1$ if $E_{i}(k)>\epsilon_{P}$, $0$ otherwise
   \end{itemize}
+\script<1->{So, let's detail the detection mechanism.\\ }
+\script<2->{First we calculate the norm of the error between the estimated P and the nominal. (Here we use the Frobenius norm)\\ }
+\script<3->{Then, we create a threshold epsilon p\\ }
+\script<4->{and finally we create an indicator d $i$ for the attack of agent $i$\\ }
+\script<5->{It is equal to 1 if the error is greater than the threshold, indicating an attack or 0 otherwise\\ }
 \end{frame}
 
 \subsection{Mitigation Mechanism}
@@ -801,6 +884,10 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
         \end{equation*}
 
 \end{itemize}
+\script<1->{Now, for the mitigation the main idea is to reconstruct the original lambda from the estimated parameters and use it in the negotiation\\ }
+\script<2->{We suppose the agent wants to decrease its cost, and the lambda sent is only equal to zero if the original is equal to zero. which implies the matrix T is invertible\\ }
+\script<3->{We can estimate the inverse of T, by using the estimate of P tilde and the nominal value of P like in this equation\\ }
+\script<4->{With the estimate of the inverse of T and the estimate of s tilde, we can reconstruct the original lambda\\ }
 \end{frame}
 
 \subsection{Complete Mechanism}
@@ -814,14 +901,21 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       % \caption{Scheme for Secure DMPC}\label{fig:schemeSafeQuantity}
     \end{figure}
   \end{minipage}
+  \pause
   \hfill
   \begin{minipage}[c]{.45\linewidth}
     Two phases:
+    \pause
     \begin{enumerate}
       \item Detect which agents are non-cooperative
+            \pause
       \item Reconstruct $\vec{\lambda}_{i}$ and use in negotiation
     \end{enumerate}
   \end{minipage}
+\script<1->{The complete mechanism is equivalent to add a supervisor for each agent inside the coordinator\\ }
+\script<2->{The mechanism is divided into the two phases, }
+\script<3->{first we detect which agents are non-cooperative }
+\script<4->{and then reconstruct the lambda i s and use in the usual negotiation\\ }
 \end{frame}
 
 % \begin{frame}
@@ -865,13 +959,13 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       minimum width=2.5cm,
       minimum height=1cm] (8cm,1cm) -- (8cm,-10cm);
 
-      \node[] at (5cm,0cm) {\Large Detection Phase};
-      \node[] at (11cm,0cm) {\Large Negotiation Phase};
+      \node[] at (5cm,0cm) {\Large \alert<2>{Detection Phase}};
+      \node[] at (11cm,0cm) {\Large \alert<3>{Negotiation Phase}};
 
       \node[draw,
       rounded rectangle,
       fill=gray!90!black!50,
-      alt=<{2}>{fill=supelecRed!90,text=white},
+      alt=<{4}>{fill=supelecRed!90,text=white},
       minimum width=2.5cm,
       minimum height=1cm] (block1) {Start};
 
@@ -882,12 +976,11 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       trapezium stretches,
       align=center,
       fill=supelecRed!10,
-      alt=<{3}>{fill=supelecRed!90,text=white},
+      alt=<{5}>{fill=supelecRed!90,text=white},
       below=of block1,
       minimum width=3.5cm,
       minimum height=1cm
       ] (block2) { Coordinator sends \\random $\vec{\theta}_{i}^{(h)}$};
-
 
       \node[draw,
       trapezium,
@@ -896,7 +989,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       trapezium stretches,
       align=center,
       fill=supelecRed!10,
-      alt=<{4}>{fill=supelecRed!90,text=white},
+      alt=<{6}>{fill=supelecRed!90,text=white},
       below=of block2,
       minimum width=3.5cm,
       minimum height=1cm
@@ -910,7 +1003,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       align=center,
       below=of block3,
       fill=supelecRed!10,
-      alt=<{5}>{fill=supelecRed!90,text=white},
+      alt=<{7}>{fill=supelecRed!90,text=white},
       minimum width=3.5cm,
       minimum height=1cm
       ] (block4) { Coordinator estimate parameters};
@@ -920,7 +1013,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       below=of block4,
       minimum width=2.5cm,
       fill=supelecRed!50,
-      alt=<{6}>{fill=supelecRed!90,text=white},
+      alt=<{8}>{fill=supelecRed!90,text=white},
       align=center,
       inner sep=0] (block5) { Estimates\\ converge?};
 
@@ -931,12 +1024,11 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       trapezium stretches,
       align=center,
       fill=supelecRed!10,
-      alt=<{7}>{fill=supelecRed!90,text=white},
+      alt=<{9}>{fill=supelecRed!90,text=white},
       right=1cm of block5,
       minimum width=3.5cm,
       minimum height=1cm
       ] (block6) { Coordinator detects \\selfish agents};
-
 
       \node[coordinate,right=6.cm of block2] (block12) {};
 
@@ -948,7 +1040,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       align=center,
       right=of block12,
       fill=supelecRed!10,
-      alt=<{8}>{fill=supelecRed!90,text=white},
+      alt=<{10}>{fill=supelecRed!90,text=white},
       minimum width=3.5cm,
       minimum height=1cm
       ] (block7) { Coordinator sends \\$\vec{\theta}_i^{(h)}$};
@@ -959,7 +1051,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       trapezium stretches,
       align=center,
       fill=supelecRed!10,
-      alt=<{9}>{fill=supelecRed!90,text=white},
+      alt=<{11}>{fill=supelecRed!90,text=white},
       below=of block7,
       minimum width=3.5cm,
       minimum height=1cm
@@ -972,7 +1064,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       trapezium stretches,
       align=center,
       fill=supelecRed!10,
-      alt=<{10}>{fill=supelecRed!90,text=white},
+      alt=<{12}>{fill=supelecRed!90,text=white},
       below=of block8,
       minimum width=3.5cm,
       minimum height=1cm
@@ -983,7 +1075,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       below=of block9,
       minimum width=2.5cm,
       fill=supelecRed!50,
-      alt=<{11}>{fill=supelecRed!90,text=white},
+      alt=<{13}>{fill=supelecRed!90,text=white},
       align=center,
       inner sep=0] (block10) { Negotiation\\ converges?};
 
@@ -991,7 +1083,7 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       rounded rectangle,
       below=of block10,
       fill=gray!90!black!50,
-      alt=<{12}>{fill=supelecRed!90,text=white},
+      alt=<{14}>{fill=supelecRed!90,text=white},
       minimum width=2.5cm,
       minimum height=1cm,] (block11) { Apply first control};
 
@@ -1019,22 +1111,55 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       node[pos=0.25,fill=white,inner sep=0]{No} -- (block2.west);
     \end{tikzpicture}
     }
-    \caption{Secure DMPC}\label{fig:secureDMPC}
+    % \caption{Secure DMPC}\label{fig:secureDMPC}
   \end{figure}
+  \script<1->{Now, for the complete secure DMPC algorithm, as said it is divided into two phases\\ }
+  \script<2->{The Detection phase \\ }
+  \script<3->{and the negotiation phase\\ }
+  \script<5->{The coordinator sends random theta i\\ }
+  \script<6->{The agents send dual variable lambda i\\ }
+  \script<7->{The coordinator estimates the parameters P and s tilde\\ }
+  \script<8->{when the estimates converge\\ }
+  \script<9->{The coordinator detects which agents are non-cooperative\\ }
+  \script<10->{then the negotiation phase begins, the coordinator sends the theta i\\ }
+  \script<11->{the agents send the dual variable lambda i\\ }
+  \script<12->{and the coordinator updates the allocation accordingly using the reconstructed lambda or the one sent by the agent\\ }
+  \script<13->{and once the negotiation converges\\ }
+  \script<14->{each agent applies the first control\\ }
+
 \end{frame}
 
 \section{Results}
-
+\script{Now, for some results}
 \begin{frame}{Example}
   \begin{exampleblock}{Temperature Control of 4 Distinct Rooms Under Power Scarcity}
     \begin{itemize}
+            \pause
       \item 4 distinct rooms modeled using 3R-2C
+            \pause
       \item Initial temperature under $20^{o}\mathrm{C}$
+            \pause
       \item Not enough power to achieve setpoint $\left({\sum_{i=1}^{4} \vec{u}_{i}(k)\leq4\mathrm{kW}}\right)$
+            \pause
       \item Simulated for a period of ${5} \mathrm{h}$
+            \pause
       \item ZOH ${T_{s}=0.25\mathrm{h}}$
+            \pause
+      \item 3 scenarios
+            \begin{enumerate}
+              \item Nominal
+              \item Agent I non cooperative from k>6 with T=4*I
+              \item Similar but with secure algorithm
+            \end{enumerate}
     \end{itemize}
   \end{exampleblock}
+  \script<1->{We give an academic example of the temperature control of 4 distinct rooms under power scarcity\\}
+  \script<2->{The 4 rooms are distinct using the 3 resistor 2 capacitor model\\}
+  \script<3->{the initial temperature of all rooms is under 20 degrees celsius, which is the final setpoint\\}
+  \script<4->{But they are under power scarcity that prevents them from reaching the setpoint\\}
+  \script<5->{we simulate for a period of 5h\\}
+  \script<6->{with sampling time of 15 minutes\\}
+  \script<7->{3 scenarios are simulated, the nominal, one where agent 1 presents non cooperative behavior from k greater than 6, and another with the selfish behavior and the secure mechanism activated\\}
 \end{frame}
 
 \begin{frame}{Results}{Temporal}
@@ -1051,8 +1176,12 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
       \item[N] Nominal
       \item[S] Selflish behavior
       \item[C] selfish behavior with Correction
-    \end{itemize}
+    \end{itemize}\pause
   \end{minipage}
+  \script<1->{In the figure we see the air temperature and the estimation error for room 1\\}
+  \script<2->{The nominal behavior is in orange, and as said it cannot reach the setpoint, in blue\\}
+  \script<3->{When the room presents selfish behavior (in blue), it reduces its cost and get closer to the setpoint, we see that the attack increases the error\\}
+  \script<4->{Now, for the case with correction (the red dots), even if it attacks the system, the temperature is close to its nominal value\\}
 \end{frame}
 
 \begin{frame}
@@ -1070,6 +1199,9 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
     Global & 408  & 442  & 409  \\
     \bottomrule
   \end{tabular}
+  \pause
+  \script<1->{Now, if we compare the costs for each scenario we see how the cost of agent 1 decreases when it attacks, while the cost of other agents increase.\\}
+  \script<2->{When the secure algorithm is activated the costs are very close to the original ones. So }
 \end{table}
 
 \end{frame}
@@ -1107,6 +1239,15 @@ What if agents send a non-agreed $\vec{\lambda}_{i}$?
             \end{itemize}
     \end{itemize}
   \end{minipage}
+  \script<1->{We can see that\\}
+  \script<2->{Resource allocation based DMPC is vulnerable to attacks.\\}
+  \script<3->{Sub-problems' structure has time invariant parameters.\\}
+  \script<4->{Attacks can be detected using these parameters.\\}
+  \script<5->{and Effects can be mitigated.\\}
+  \script<6->{An outlook for future works \\}
+  \script<7->{is to use inequality constraints instead of only equality constraints, which will yield hybrid behavior\\}
+  \script<8->{and try to implement with non-linear attack models\\}
+
 \end{frame}
 
 
@@ -1143,6 +1284,8 @@ defense mechanism for distributed model predictive control,''
   0.5em minus 0.4em\relax IEEE, Dec 2017, pp. 6171--6176.
 
   \end{thebibliography}
+    \script{As a recommended reading I give a book about distributed MPC and an article with another secure dmpc algorithm based in another decomposition method. That's all\\}
+
 \end{frame}
 \begin{frame}[plain]
   \centering
@@ -1168,6 +1311,8 @@ defense mechanism for distributed model predictive control,''
   \end{minipage}
   \ifwebcast{\tikz{\draw[fill=pink,draw=pink] (1.5,0) circle [radius=1.5cm]}}%
   \fi
+      \script{If you want to see the simulations of this paper we have a github repository, and if you want to send me an email about this paper or this presentation you can flash the QR code in the right. Thank you!\\}
+
 \end{frame}
 
 \end{document}
