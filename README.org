@@ -1,0 +1,22 @@
+#+TITLE: SySTol'21
+
+Repository for the paper «Detection and Mitigation of Corrupted Information in Distributed Model Predictive Control Based on Resource Allocation» for the 5th International Conference on Control and Fault-Tolerant Systems, 2021
+
+* Requirements
+- Matlab
+- matlab2tikz (figures)
+- LaTeX (presentation)
+
+* Folder Structure
+
+#+begin_src
+├── article
+├── img
+├── presentation
+└── script
+#+end_src
+
+- article :: home of the source files for the paper
+- img :: home of the image files for the paper and presentation
+- presentation :: home of the source files for the presentation
+- script :: home of the scripts used for the paper and presentation
