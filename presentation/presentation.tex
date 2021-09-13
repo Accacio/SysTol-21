@@ -537,8 +537,7 @@
     \end{minipage}
   }
   \script<1->{An example of decomposition method is the Quantity decomposition where a semi-decomposable problem with a global coupling constraints can be decomposed into }
-  \script<2->{multiple sub-problems, which can be solved in parallel, and a master problem which corresponds to the initial problem. \\
-   Those coupling constraints are replaced by local constraints with an allocation theta i. }
+  \script<2->{multiple sub-problems, which can be solved in parallel, and a master problem which corresponds to the initial problem. \\ Those coupling constraints are replaced by local constraints with an allocation theta i. }
   \script<3->{The allocation for each sub-problem is updated by a projected subgradient method solving the master problem, thus the original problem. The subgradient used in this method is the dual variable associated to the coupling constraints}
   \script<4->{We can represent the sub-problems as agents and the master problem as a coordinator. The coordinator sends the allocations for each agent, which responds with a dual variable. }
 \end{frame}
