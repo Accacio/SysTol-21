@@ -2,6 +2,9 @@
 
 Repository for the paper «Detection and Mitigation of Corrupted Information in Distributed Model Predictive Control Based on Resource Allocation» for the 5th International Conference on Control and Fault-Tolerant Systems, 2021
 
+#+HTML: <p align="center">Watch it:<br><a href="https://youtu.be/b074nivVltI"><img src="img/presentation.jpg" width="50%"/><a/></p>
+
+
 * Requirements
 - Matlab
 - matlab2tikz (figures)
