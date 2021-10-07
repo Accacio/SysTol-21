@@ -1,4 +1,6 @@
-\errmessage{This article is copyrighted by IEEE and should not be TeXed}
+\loop\iftrue%
+\errmessage{This article is copyrighted by IEEE and should not be TeXed}%
+\repeat%
 
 \documentclass[a4paper, 10 pt, conference]{ieeeconf}  % Comment this line out
 \IEEEoverridecommandlockouts% This command is only
@@ -63,7 +65,8 @@ Detection and Mitigation of Corrupted Information in Distributed Model Predictiv
 \newcommand{\id}{}
 \newcommand{\price}{31.00}
 \pubid{\begin{minipage}{\textwidth}\ \\[50pt]\centering
-  \copyright 2021 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.\\
+    \copyright{} 2021 IEEE.
+    Personal use is permitted, but republication/redistribution requires IEEE permission.\\
 See https://www.ieee.org/publications/rights/index.html for more information.
 \end{minipage}}
 % \makeglossaries
